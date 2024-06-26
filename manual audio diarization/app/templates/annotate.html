@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Audio Diarization Annotation tool</title>
+
+    <link href="data:image/gif;" rel="icon" type="image/x-icon"/>
+
+    <!-- Bootstrap -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../static/css/style.css"/>
+    <link rel="stylesheet" href="../static/css/ribbon.css"/>
+    <link rel="stylesheet" href="../static/app.css"/>
+
+    <!-- wavesurfer.js -->
+    <script src="../static/lib/wavesurfer.js"></script>
+
+    <!-- plugins -->
+    <script src="../static/lib/plugin/wavesurfer.timeline.js"></script>
+    <script src="../static/lib/plugin/wavesurfer.regions.js"></script>
+    <script src="../static/lib/plugin/wavesurfer.minimap.js"></script>
+    <script src="../static/lib/plugin/wavesurfer.cursor.js"></script>
+
+    <!-- App -->
+    <script src="../static/trivia.js"></script>
+    <script src="../static/app.js"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebApplication">
+<div class="container">
+    <div class="header">
+        <ul class="nav nav-pills pull-right">
+        </ul>
+
+        <h1 itemprop="name">Инструмент для ручной диаризации аудиозаписей</h1>
+        <div><p><b>Разметка файла: {{ name }}</b></p></div>
+    </div>
+
+    <div id="demo">
+        <p id="subtitle" class="text-center text-info">&nbsp;</p>
+
+        <div id="wave-timeline"></div>
+
+        <div id="waveform">
+            <!-- Here be waveform -->
+        </div>
+        <div id="wave-minimap"></div>
+
+        <div class="row" style="margin: 30px 0">
+            <div class="col-sm-4">
+                <p>
+                    Нажмите на сегмент для его редактирования.<br/>
+                    Шифт-клик для создания сегмента.
+                </p>
+            </div>
+
+            <div class="col-sm-2">
+                <button class="btn btn-primary btn-block" data-action="play">
+                            <span id="play">
+                                <i class="glyphicon glyphicon-play"></i>
+                                Play
+                            </span>
+
+                    <span id="pause" style="display: none">
+                                <i class="glyphicon glyphicon-pause"></i>
+                                Pause
+                            </span>
+                </button>
+            </div>
+
+			<div class="col-sm-3">
+                <button class="btn btn-info btn-block" data-action="extract-regions" title="Extract regions">
+                    <i class="glyphicon glyphicon-file"></i>
+                    Авторазметка
+                </button>
+            </div>
+
+            <div class="col-sm-3">
+                <button class="btn btn-info btn-block" data-action="export" title="Export annotations to JSON">
+                    <i class="glyphicon glyphicon-file"></i>
+                    Экспорт JSON
+                </button>
+            </div>
+			
+			<div class="col-sm-3">
+                <button class="btn btn-info btn-block" data-action="export-rttm" title="Export annotations to RTTM">
+                    <i class="glyphicon glyphicon-file"></i>
+                    Экспорт RTTM
+                </button>
+            </div>
+        </div>
+		
+		<div class="row" style="margin: 30px 0">
+            <div class="col-sm-4">
+                <p>
+                    Выберите, создайте или удалите актора.
+                </p>
+            </div>
+			
+			<div class="col-sm-2">
+				<input type="text" size="10" id="newActor" name="newActor"/>
+			</div>
+			
+			<div class="col-sm-2">
+				<button class="btn btn-primary btn-block" data-action="add-actor">
+								Добавить
+			</div>
+			
+			<div class="col-sm-2">
+				<select class="custom-select" id="actors" name="actors" style="height: 30px;width: 100%">
+					
+				</select>
+			</div>
+			
+			<div class="col-sm-2">
+				<button class="btn btn-primary btn-block" data-action="delete-actor">
+								Удалить
+			</div>
+        </div>
+    </div>
+
+    <form role="form" name="edit" style="opacity: 0; transition: opacity 300ms linear; margin: 30px 0;">
+        <div class="form-group">
+            <label for="start">Начало</label>
+            <input type="number" step="0.1" class="form-control" id="start" name="start"/>
+        </div>
+
+        <div class="form-group">
+            <label for="end">Конец</label>
+            <input type="number" step="0.1" class="form-control" id="end" name="end"/>
+        </div>
+        <div>
+            <select class="custom-select" id="who" name="who" style="height: 30px;width: 100%">
+                
+            </select>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-success btn-block">Сохранить</button>
+        </div>
+        <!--        <center><i>or</i></center>-->
+        <div>
+            <button type="button" class="btn btn-danger btn-block" data-action="delete-region">Удалить</button>
+        </div>
+    </form>
+
+    <div class="footer row">
+    </div>
+</div>
+</div>
+
+</body>
+</html>
